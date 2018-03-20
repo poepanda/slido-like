@@ -1,0 +1,84 @@
+.question-list {
+  background-color: white;
+  box-shadow: 0 1px 4px 0 rgba(0,0,0,.37);
+}
+.column.question-item {
+  padding: 1rem;
+  position: relative;
+}
+.question-item .columns,
+.question-item .column {
+  margin: 0;
+}
+.question-item__avatar {
+  background-color: #cccccc;
+  width: 42px;
+  height: 42px;
+  border-radius: 21px;
+  margin-right: 12px;
+}
+.question-item__more {
+  position: absolute;
+  right: 8px;
+  top: 16px;
+  cursor: pointer;
+  opacity: 0.1;
+}
+.question-item__more:hover {
+  opacity: 0.8;
+}
+
+.question-item__content {
+  padding: 4px 0 16px;
+}
+
+/* ------ Popover styles ------*/
+.question-item__popover {
+  padding: 12px 18px;
+  background-color: white;
+  border-radius: 4px;
+  box-shadow: 0 0 10px rgba(0,0,0,.15);
+}
+.question-item__icon-link {
+  cursor: pointer;
+}
+.question-item__icon-link:hover {
+  text-decoration: underline;
+}
+.question-item__icon-link svg {
+  padding: 3px;
+  margin-right: 8px;
+}
+
+
+/* ------ React buttons styles -------*/
+.columns.react-buttons {
+  position: absolute;
+  right: 12px;
+  top: 16px;
+  border-radius: 20px; 
+  border: 1px solid #cecece;
+}
+
+.column.react-buttons__react {
+  padding: 4px 14px;
+  font-size: 0.8rem;
+  color: #acacac;
+  cursor: pointer;
+}
+.column.react-buttons__react:hover,
+.column.react-buttons__react--is-active {
+  color: #2181C2;
+  
+}
+.react-buttons svg {
+  margin-left: 5px;
+  margin-top: -2px;
+}
+.react-buttons__react {
+
+}
+
+.react-buttons__react.is-like {
+  border-right: 1px solid #cecece;
+}

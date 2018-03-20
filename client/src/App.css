@@ -1,0 +1,21 @@
+/* ---- Common styles for the whole app ---- */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+}
+
+html, body {
+  height: 100%;
+  overflow: hidden;
+}
+
+#root {
+  height: 100%;
+  overflow: auto;
+  background-color: #eeeeee;
+}
+
+.route-container {
+  padding: 30px 12px;
+}

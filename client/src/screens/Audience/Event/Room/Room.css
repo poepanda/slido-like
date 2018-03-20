@@ -1,0 +1,4 @@
+input.new-question-form__input {
+  padding: 42px 28px;
+  transition: padding 0.3s ease-in-out;
+}
