@@ -1,0 +1,21 @@
+version: '3'
+services:
+    client:
+        image: node:8.10
+        working_dir: /client
+        command: npm run start
+        volumes:
+            - ./client:/client
+        ports:
+            - "3000:3000"
+    server:
+        image: node:7.7
+        working_dir: /server
+        command: npm run start
+        volumes:
+            - ./server:/server
+            - ./server/media:/media
+        ports:
+            - "8000:8000"
+        environment:
+            NODE_ENV: ${NODE_ENV}

@@ -6,36 +6,59 @@ A simple example of Sli.do ;)
 
 - NodeJS (Version 8 or above)
 - [RethinkDB](https://www.rethinkdb.com/)
-- Docker
+- [Docker](https://www.docker.com/get-docker)
 
-## How to run with Docker
+## Getting started
 
-To be updated!
+Start dev server (with docker-compose)
+```
+bash bin/develop.sh
+# Or bin/develop.sh
+```
 
-## How to install and dev (manually
+Then open:
+- server: localhost:8000
+- client: localhoset:3000
+
+## How to install and dev (manually)
 
 For Client-side React app
 ```
-  $> cd ./client
-  $> yarn install
-  $> yarn start
+cd ./client
+yarn install
+yarn start
 ```
 
 For Server REST API
 ```
-  $> cd ./server
-  $> yarn install
-  $> yarn start
+cd ./server
+yarn install
+yarn start
 ```
 
 For Datbase
 ```
-  $> cd database
-  $> rethinkdb
+cd database
+rethinkdb
 ```
 
 ## Stack
 
+Backend: 
+- NodeJS (Express)
+- Socket.io (real-time updates and interactions)
+
+Frontend
+- React.JS
+- Redux
+- Redux-Saga
+- Bulma (CSS framework)
+
+Database
+- RethinkDB
+
+Devops
+- Docker
 
 ## Why?
 
