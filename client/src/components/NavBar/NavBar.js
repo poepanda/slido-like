@@ -1,9 +1,11 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
 
+import ErrorsDisplay from '../ErrorsDisplay';
+
 import './NavBar.css';
 
-export default ({ authenticated, logout }) => (
+export default ({ authenticated, logout, logoutErrors, cleanLogoutErrors }) => (
   <nav className="main-nav">
     <Link to="/">Home</Link>
     {' - '}
@@ -14,6 +16,7 @@ export default ({ authenticated, logout }) => (
         <Link to="/admin/event/create">Create Event</Link>
         {' - '}
         <a onClick={logout}>Logout</a>
+        <ErrorsDisplay namespace="logout" isToast errors={logoutErrors} clean={cleanLogoutErrors}/>
       </span>
     ) : null }
   </nav>

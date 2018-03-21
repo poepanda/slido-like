@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import Register from './Register';
 
 import { inProgress, errors } from 'app/data/me/selectors';
-import { register } from 'app/data/me/actionCreators';
+import { register, cleanError } from 'app/data/me/actionCreators';
 
 const mapStateToProps = state => ({
   inProgress: inProgress(state),
@@ -11,7 +11,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  register: (email, password) => dispatch(register(email, password)),
+  register: ({ name, email, password }) => dispatch(register({ name, email, password })),
+  cleanError: () => dispatch(cleanError()),
 });
 
 export default connect(

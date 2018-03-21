@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken';
-import config from './config';
+import config from '../config';
 
-function verifyToken(req, res, next) {
+export default (req, res, next) => {
 
   // check header or url parameters or post parameters for token
   var token = req.headers['x-access-token'];
@@ -19,5 +19,3 @@ function verifyToken(req, res, next) {
   });
 
 }
-
-module.exports = verifyToken;

@@ -2,12 +2,13 @@ import {
   ME_LOGIN,
   ME_REGISTER,
   ME_LOGOUT,
-  ME_GET_ROOM_TOKEN
+  ME_GET_ROOM_TOKEN,
+  ME_CLEAN_ERROR
 } from './actionTypes';
 
-export const register = (displayName, email, password) => ({
+export const register = ({ name, email, password }) => ({
   type: ME_REGISTER,
-  displayName,
+  name,
   email,
   password
 })
@@ -25,4 +26,8 @@ export const logout = () => ({
 export const getRoomToken = (eventCode) => ({
   type: ME_GET_ROOM_TOKEN,
   eventCode
+})
+
+export const cleanError = () => ({
+  type: ME_CLEAN_ERROR
 })

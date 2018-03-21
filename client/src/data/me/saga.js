@@ -1,4 +1,5 @@
-import { put, takeLatest, all } from 'redux-saga/effects';
+import { delay } from 'redux-saga'
+import { put, call, takeLatest, all } from 'redux-saga/effects';
 
 import {
   ME_LOGIN,
@@ -19,31 +20,45 @@ import {
   ME_GET_ROOM_TOKEN_FAIL,
 } from './actionTypes';
 
+import { loginApi, registerApi, logoutApi } from './api';
+import { getErrors } from 'app/services/transform';
+
 function* login({ email, password }) {
   yield put({ type: ME_LOGIN_START });
   try {
-    yield put({ type: ME_LOGIN_SUCCESS });
+    const loginResult = yield call(loginApi, { email, password });
+    if (loginResult) {
+      yield put({ type: ME_LOGIN_SUCCESS, token: loginResult.data.token });
+    }
   } catch(err) {
-    yield put({ type: ME_LOGIN_FAIL, err });
+    const errors = getErrors(err, 'login');
+    yield put({ type: ME_LOGIN_FAIL, errors });
   }
 }
 
-function* register({ displayName, email, password }) {
+function* register({ name, email, password }) {
   yield put({ type: ME_REGISTER_START });
   try {
-    yield put({ type: ME_REGISTER_SUCCESS });
-    yield put({ type: ME_LOGIN });
+    const registerResult = yield call(registerApi, { name, email, password });
+    if (registerResult) {
+      yield put({ type: ME_REGISTER_SUCCESS, token: registerResult.data.token });
+    }
   } catch(err) {
-    yield put({ type: ME_REGISTER_FAIL, err });
+    const errors = getErrors(err, 'register');
+    yield put({ type: ME_REGISTER_FAIL, errors });
   }
 }
 
 function* logout() {
   yield put({ type: ME_LOGOUT_START });
   try {
-    yield put({ type: ME_LOGOUT_SUCCESS });
+    const logoutResult = yield call(logoutApi);
+    if (logoutResult) {
+      yield put({ type: ME_LOGOUT_SUCCESS });
+    }
   } catch(err) {
-    yield put({ type: ME_LOGOUT_FAIL, err });
+    const errors = getErrors(err, 'logout');
+    yield put({ type: ME_LOGOUT_FAIL, errors });
   }
 }
 

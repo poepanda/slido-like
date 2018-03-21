@@ -1,32 +1,29 @@
 import express from 'express';
-import bodyParser from 'body-parser';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
 
-import config from './config';
+import config from '../config';
+import { errors } from '../response';
 
 // Database
 import { User } from '../../db';
 
 const router = express.Router();
-import verifyToken from './verifyToken';
+import authenticated from '../middlewares/authenticated';
 
-router.use(bodyParser.urlencoded({ extended: false }));
-router.use(bodyParser.json());
-
-router.post('/login', function(req, res) {
+router.post('/login', (req, res) => {
+  const { email = '', password = '' } = req.body;
   User()
-    .find({ email: req.body.email })
+    .find({ email: email || '' })
     .then(result => {
-      if (result.errors) return res.status(500).send('Something wrong happen on the server.');
-      if (!result.length) return res.status(404).send('User doesn\'t exist');
+      if (result.errors) return res.status(500).send(errors('Something wrong happen on the server.'));
+      if (!result.length) return res.status(400).send(errors('User doesn\'t exist'));
       const user = result[0];
 
       // check if the password is valid
-      console.log(req.body);
-      if (!req.body.password) return res.status(401).send('Password is empty')
-      const passwordIsValid = bcrypt.compareSync(req.body.password, user.password);
-      if (!passwordIsValid) return res.status(401).send('Invalid password');
+      if (!password) return res.status(401).send(errors('Password is empty'));
+      const passwordIsValid = bcrypt.compareSync(password, user.password);
+      if (!passwordIsValid) return res.status(401).send(errors('Invalid password'));
       
       // if user is found and password is valid
       // create a token
@@ -38,14 +35,14 @@ router.post('/login', function(req, res) {
     })
 });
 
-router.get('/logout', function(req, res) {
+router.get('/logout', (req, res) => {
   // Do nothing and send mulltoken back
   res.status(200).send({ auth: false, token: null });
 });
 
-router.post('/register', function(req, res) {
+router.post('/register', (req, res) => {
   const { email, password, name } = req.body;
-  if (!email || !password) res.status(400).send('Email or Password is empty!')
+  if (!email || !password) res.status(400).send(errors('Email or Password is empty!'))
   var hashedPassword = bcrypt.hashSync(password, 8);
 
   User().create({
@@ -53,7 +50,7 @@ router.post('/register', function(req, res) {
     email,
     password: hashedPassword
   }).then(({ errors, id }) => {
-    if (errors) res.status(500).send('There was problem registering the user!');
+    if (errors) res.status(500).send(errors('There was problem registering the user!'));
     // If user registered without error
     // Generate the token
     const token = jwt.sign({ id }, config.secret, {
@@ -66,13 +63,13 @@ router.post('/register', function(req, res) {
   
 });
 
-router.get('/me', verifyToken, function(req, res, next) {
+router.get('/me', authenticated, (req, res, next) => {
   User()
     .find({ id: req.userId })
     .then(result => {
-      if (result.errors) return res.status(500).send("There was a problem finding the user.");
+      if (result.errors) return res.status(500).send(errors('There was a problem finding the user.'));
       const user = result[0];
-      if (!user) return res.status(404).send("No user found!");
+      if (!user) return res.status(400).send(errors('No user found!'));
       res.status(200).send({
         email: user.email,
         name: user.name,

@@ -1,5 +1,11 @@
 import { errorHandler } from '../utils';
 
+const defaultUserData = {
+  email: '',
+  name: '',
+  password: '',
+}
+
 export default (r, connection) => ({
   find: (query) => {
     return r.table('users').filter(query ? query : {}).run(connection).then((cursor) => {
@@ -7,7 +13,7 @@ export default (r, connection) => ({
     }).error(errorHandler);
   },
 
-  create: (data) => {
+  create: (data = defaultUserData) => {
     return r.table('users')
       .insert(data).run(connection)
       .then(({ generated_keys, errors}) => ({

@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import { dataIsReady } from './data/meta/selectors';
 
 import NavBar from './components/NavBar';
-import LoadingScreen from './screens/Loading';
+import Loading from './components/Loading';
 import NotFound from './screens/NotFound';
 import Landing from './screens/Landing';
 import AudienceRoutes from './screens/Audience/routes';
@@ -41,7 +41,7 @@ const RootRouter = ({ dataIsReady }) => {
         </div>
       </div>
     </Router>
-  ) : <LoadingScreen />;
+  ) : <Loading fullscreen visible={true}/>;
 }
 
 export default connect(mapStateToProps)(RootRouter);

@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 
 import Input from 'app/components/Input';
 import Button from 'app/components/Button';
+import Loading from 'app/components/Loading';
+import ErrorsDisplay from 'app/components/ErrorsDisplay';
 
 const FIELD_ROW_CLASS = 'column is-narrow is-quarter-desktop';
 
@@ -17,6 +19,10 @@ class Login extends Component {
     this.login = this.login.bind(this);
   }
 
+  componentWillMount() {
+    this.props.cleanError();
+  }
+
   setValue = (name) => (value) => {
     this.setState({ [name]: value });
   }
@@ -29,6 +35,8 @@ class Login extends Component {
 
   render() {
     const { email, password } = this.state;
+    const { inProgress, errors } = this.props;
+    console.log('in progress', inProgress, errors);
     return (
       <div className="column">
         <h2 className="title has-text-centered">Log in</h2>
@@ -57,10 +65,16 @@ class Login extends Component {
           </div>
           <div className="columns is-multiline is-centered">
             <div className={FIELD_ROW_CLASS}>
+              <ErrorsDisplay errors={errors} namespace="login"/>
+            </div>
+          </div>
+          <div className="columns is-multiline is-centered">
+            <div className={FIELD_ROW_CLASS}>
               <Button customClass="is-fullwidth" primary>Log in</Button>
             </div>
           </div>
         </form>
+        <Loading visible={inProgress} label="Logging in..." fullscreen/>
       </div>
     )
   }
