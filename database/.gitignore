@@ -1,1 +1,2 @@
-# Ignore unneccessary database folder and files
+# Ignore unneccessary database folder and file
+rethinkdb_data

@@ -1,0 +1,6 @@
+{
+	"port": 7000,
+	"bodyLimit": "100kb",
+	"corsHeaders": ["Link"],
+	"secret": "PandaNotSupposedToBeHere" 
+}

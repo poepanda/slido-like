@@ -19,8 +19,9 @@ bash bin/develop.sh
 *NOTE: If there is an error with client dev server, run the bash command again as it's seem an issue with react-script*
 
 Then open:
-- server: localhost:8000
+- server: localhost:7000
 - client: localhoset:3000
+- rethinkDB administration: localhost: 8080
 
 ## How to install and dev (manually)
 
@@ -35,13 +36,13 @@ For Server REST API
 ```
 cd ./server
 yarn install
-yarn start
+yarn dev
 ```
 
 For Datbase
 ```
 cd database
-rethinkdb
+rethinkdb --bind all
 ```
 
 ## Stack
@@ -79,7 +80,7 @@ Devops
 
 - [ ] Backend - Setup basic 
 - [ ] Backend - Endpoints for
-  - [ ] authentication
+  - [X] authentication
   - [ ] event creation
   - [ ] fetch event
 - [ ] Backend - Socket setup - Event / Room connection 
@@ -120,7 +121,6 @@ Devops
   - [ ] authentication
   - [ ] event creation
   - [ ] fetch event
-
 - [ ] Frontend - Redux (Data) Unit-test
   - [ ] Admin - Login / Register
   - [ ] Admin - Create Event
