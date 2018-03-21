@@ -12,7 +12,8 @@ export const User = () => userModel(r, connection);
 export default callback => {
   // connect to a database if needed, then pass it to `callback`:
   //Try to connect to db
-  r.connect({ host: 'localhost', port: process.env.DB_PORT || 28015 }, (err, conn) => {
+  // r.connect({ host: 'localhost' , port: process.env.DB_PORT || 28015 }, (err, conn) => {
+  r.connect({ host: process.env.DB_HOST || 'localhost' , port: process.env.DB_PORT || 28015 }, (err, conn) => {
     if (err) throw err;
     
     // Populate the connection to be used outside of this call back

@@ -7,7 +7,7 @@ services:
         volumes:
             - ./client:/client
         ports:
-            - "3000:3000"
+            - 3000:3000
     server:
         image: node:7.7
         working_dir: /server
@@ -16,9 +16,11 @@ services:
             - ./server:/server
             - ./server/media:/media
         ports:
-            - "7000:7000"
+            - 7000:7000
         environment:
             NODE_ENV: ${NODE_ENV}
+            DB_PORT: 28015
+            DB_HOST: "172.19.0.2"
         depends_on: 
             - rethinkdb
     rethinkdb:
@@ -29,6 +31,5 @@ services:
             - ./data:/data
         ports:
             - "28015"
-            - "29015"
             - "8080:8080"
                 
