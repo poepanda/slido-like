@@ -11,11 +11,24 @@ services:
     server:
         image: node:7.7
         working_dir: /server
-        command: npm run start
+        command: npm run dev
         volumes:
             - ./server:/server
             - ./server/media:/media
         ports:
-            - "8000:8000"
+            - "7000:7000"
         environment:
             NODE_ENV: ${NODE_ENV}
+        depends_on: 
+            - rethinkdb
+    rethinkdb:
+        image: rethinkdb
+        working_dir: /database
+        command: rethinkdb --bind all
+        volumes:
+            - ./data:/data
+        ports:
+            - "28015"
+            - "29015"
+            - "8080:8080"
+                
