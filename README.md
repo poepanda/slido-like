@@ -16,6 +16,8 @@ bash bin/develop.sh
 # Or bin/develop.sh
 ```
 
+*NOTE: If there is an error with client dev server, run the bash command again as it's seem an issue with react-script*
+
 Then open:
 - server: localhost:8000
 - client: localhoset:3000
