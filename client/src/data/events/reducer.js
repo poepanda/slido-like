@@ -2,7 +2,7 @@
 events: {
   [event_code]: {
     eventId: id_of_the_event,
-    eventCode: the_event_code,
+    code: the_event_code,
     name: name_of_event,
     from: the_start_date,
     to: the_end_date,
@@ -60,7 +60,7 @@ export default (state = initialState, action) => {
     case FETCH_EVENT_SUCCESS: {
       const newEvents = {...state.events};
       const indexedQuestions = addIndexPropertyTo(action.data.questions);
-      newEvents[action.eventCode] = {
+      newEvents[action.code] = {
         ...action.data,
         questions: indexedQuestions
       };
@@ -84,8 +84,8 @@ export default (state = initialState, action) => {
       }
     }
     case ADD_QUESTION_SUCCESS: {
-      const { eventCode, question } = action;
-      const currentEvent = {...state.events[eventCode]}
+      const { code, question } = action;
+      const currentEvent = {...state.events[code]}
       const newQuestions = [...currentEvent.questions];
       newQuestions.push(
         {
@@ -104,7 +104,7 @@ export default (state = initialState, action) => {
         ...state,
         events: {
           ...state.events,
-          ...{ [eventCode]: {...currentEvent} }
+          ...{ [code]: {...currentEvent} }
         },
         inProgress: false,
       }

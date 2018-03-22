@@ -10,7 +10,7 @@ export default class Join extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      eventCode: '',
+      code: '',
       eventCodeError: ''
     };
 
@@ -18,19 +18,19 @@ export default class Join extends Component {
     this.joinEvent = this.joinEvent.bind(this);
   }
 
-  setEventCode(eventCode) {
-    this.setState({ eventCode });
+  setEventCode(code) {
+    this.setState({ code });
   }
 
   joinEvent(e) {
     e.preventDefault();
-    const { eventCode } = this.state;
-    if (!eventCode) return toast.error('Please fill in the event code!');
-    this.props.history.push(`audi/event/${eventCode}`);
+    const { code } = this.state;
+    if (!code) return toast.error('Please fill in the event code!');
+    this.props.history.push(`audi/event/${code}`);
   }
 
   render() {
-    const { eventCode } = this.state;
+    const { code } = this.state;
 
     return (
       <div className="event-join container">
@@ -40,9 +40,9 @@ export default class Join extends Component {
             className="column is-centered has-text-centered"
           >
             <Input
-              name="eventCode"
+              name="code"
               onChange={this.setEventCode}
-              value={eventCode}
+              value={code}
               placeholder="Enter the event code"
               addons={(
                 <Button primary large>

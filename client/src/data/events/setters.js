@@ -1,6 +1,6 @@
 export const setQuestionProp = (state, action, newProps) => {
-  const { eventCode, index } = action;
-  const targetEvent = state.events[eventCode];
+  const { code, index } = action;
+  const targetEvent = state.events[code];
   const newQuestions = [...targetEvent.questions];
   newQuestions[index] = {
     ...newQuestions[index],
@@ -10,7 +10,7 @@ export const setQuestionProp = (state, action, newProps) => {
   return {
     ...state.events,
     ...{ 
-      [eventCode]: {
+      [code]: {
         ...targetEvent,
         questions: newQuestions,
       }

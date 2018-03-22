@@ -1,4 +1,4 @@
-import { put, takeLatest } from 'redux-saga/effects';
+import { put, takeLatest, call } from 'redux-saga/effects';
 
 import {
   ADMIN_FETCH_EVENT,
@@ -19,19 +19,20 @@ import {
   DELETE_QUESTION_FAIL,
 } from './actionTypes';
 
-function* createEvent({ name, eventCode, from, to }) {
+import { createEventApi, adminFetchEventsApi } from './api';
+import { getErrors } from 'app/services/transform';
+
+function* createEvent({ name, code, from, to }) {
   yield put({ type: CREATE_EVENT_START });
   try {
-    yield put({ 
-      type: CREATE_EVENT_SUCCESS,
-      name,
-      eventCode,
-      from,
-      to,
-      id: 123 // This will be returned by the server
-    });
+    const result = yield call(createEventApi, { name, code, from, to });
+    if (result) {
+      const data = { id: result.data.id, name, code, from, to };
+      yield put({ type: CREATE_EVENT_SUCCESS, data });
+    }
   } catch(err) {
-    yield put({ type: CREATE_EVENT_FAIL });
+    const errors = getErrors(err);
+    yield put({ type: CREATE_EVENT_FAIL, errors });
   }
 }
 
@@ -47,9 +48,14 @@ function* deleteQuestion({ index, id }) {
 function* adminFetchEvent() {
   yield put({ type: ADMIN_FETCH_EVENT_START });
   try {
-    yield put({ type: ADMIN_FETCH_EVENT_SUCCESS });
+    const result = yield call(adminFetchEventsApi);
+    if (result) {
+      const data = result.data.event;
+      yield put({ type: ADMIN_FETCH_EVENT_SUCCESS, data });
+    }
   } catch(err) {
-    yield put({ type: ADMIN_FETCH_EVENT_FAIL });
+    const errors = getErrors(err);
+    yield put({ type: ADMIN_FETCH_EVENT_FAIL, errors });
   }
 }
 

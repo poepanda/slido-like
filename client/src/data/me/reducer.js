@@ -95,7 +95,7 @@ export default (state = initialState, action) => {
     }
     case ME_GET_ROOM_TOKEN_SUCCESS: {
       const newRoomTokens = {...state.roomTokens}
-      newRoomTokens[action.eventCode] = action.token;
+      newRoomTokens[action.code] = action.token;
       return {
         ...state,
         inProgress: false,

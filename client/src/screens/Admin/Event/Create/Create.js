@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
 import moment from 'moment';
 import { ToastContainer, toast } from 'react-toastify';
+import { throttle } from 'lodash';
 
 import Input from 'app/components/Input';
 import DateBox from 'app/components/DateBox';
 import Button from 'app/components/Button';
+import ErrorsDisplay from 'app/components/ErrorsDisplay';
+import Loading from 'app/components/Loading';
 
 const FIELD_ROW_CLASS = 'column is-narrow is-quarter-desktop';
 
@@ -12,7 +15,7 @@ class EventCreate extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      eventCode: '',
+      code: '',
       name: '',
       from: moment(),
       to: moment().add(3, 'days'),
@@ -36,21 +39,32 @@ class EventCreate extends Component {
   componentDidMount() {
     if (this.props.eventCreated) {
       toast.warn('For now, you can only create one event! Redirecting to event manage page');
-      setTimeout(() => {
-        this.props.history.push('/admin');
-      }, 2000);
+      setTimeout(
+        throttle(() => {
+          this.props.history.push('/admin');
+        }, 2500), 2000
+      );
     }
+    this.props.cleanError();
   }
 
   componentDidUpdate() {
     if (this.props.eventCreated) {
       toast.warn('Event created! Redirect to Manage page...');
-      setTimeout(() => this.props.history.push('/admin'), 1500);
+      setTimeout(
+        throttle(() => this.props.history.push('/admin'), 2500), 1500
+      );
     }
   }
 
   render() {
-    const { eventCode, name, from, to } = this.state;
+    const { inProgress, errors, eventCreated } = this.props;
+    const { code, name, from, to } = this.state;
+    if (eventCreated) return (
+      <div className="container">
+        <h6 className="has-text-centered">Event was already created! <br/> Redirecting... to manage page</h6>
+      </div>
+    )
     return (
       <div className="container">
         <h1 className="title has-text-centered">Create new event</h1>
@@ -59,12 +73,12 @@ class EventCreate extends Component {
             <form onSubmit={this.createEvent}>
               <div className="columns is-multiline is-centered">
                 <Input
-                  name="eventCode"
+                  name="code"
                   customClass={FIELD_ROW_CLASS}
                   placeholder="Enter a unique code"
                   label="Code"
-                  value={eventCode}
-                  onChange={this.setValue('eventCode')}
+                  value={code}
+                  onChange={this.setValue('code')}
                 />
               </div>
               <div className="columns is-multiline is-centered">
@@ -91,12 +105,18 @@ class EventCreate extends Component {
                   label="Date to"
                   value={to}/>
               </div>
-              <div className="columns is-multiline is-centered">
+              <div className="columns is-multiline is-centered has-text-centered">
+                <div className={FIELD_ROW_CLASS}>
+                  <ErrorsDisplay errors={errors}/>
+                </div>
+              </div>
+              <div className="columns is-multiline is-centered has-text-centered">
                 <Button primary>Create event</Button>
               </div>
             </form>
           </div>
         </div>
+        <Loading visible={inProgress} fullscreen/>
         <ToastContainer />
       </div>
     )

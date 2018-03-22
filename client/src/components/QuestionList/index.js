@@ -62,7 +62,8 @@ export default class QuestionList extends Component {
       isAdmin,
       sortBy,
       reactToQuestion,
-      interacterToken
+      interacterToken,
+      emptyText,
     } = this.props;
     return (questions && questions.length) ? (
       <SortableList
@@ -77,7 +78,7 @@ export default class QuestionList extends Component {
       />
     ) : (
       <div className="container">
-        <h4>Ask something :)</h4>
+        <h4>{ emptyText ? emptyText : 'Ask something :)' }</h4>
       </div>
     );
   }
@@ -92,4 +93,5 @@ QuestionList.proptypes = {
   activePopoverId: PropTypes.string,
   interacterToken: PropTypes.string,
   reactToQuestion: PropTypes.func,
+  emptyText: PropTypes.string,
 }

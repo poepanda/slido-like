@@ -9,12 +9,12 @@ import {
 
 // NOTE: the id is used for server-side update while the index is used for local data update
 
-export const createEvent = ({ name, from, to, eventCode }) => ({
+export const createEvent = ({ name, from, to, code }) => ({
   type: CREATE_EVENT,
   name,
   from: from.toISOString(),
   to: to.toISOString(),
-  eventCode,
+  code: code,
 });
 
 export const fetchEvent = () => ({
@@ -44,6 +44,6 @@ export const adminFetchEvent = () => ({
   type: ADMIN_FETCH_EVENT,
 })
 
-export const cleanErrors = () => ({
+export const cleanError = () => ({
   type: CLEAN_ERROR,
 });

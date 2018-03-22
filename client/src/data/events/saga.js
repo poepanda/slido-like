@@ -17,20 +17,20 @@ import {
 
 import sampleEvent from './sampleEvent';
 
-function* fetchEvent({ eventCode }) {
-  yield put({ type: FETCH_EVENT_START, eventCode });
+function* fetchEvent({ code }) {
+  yield put({ type: FETCH_EVENT_START, code });
   try {
     const data = sampleEvent;
-    yield put({ type: FETCH_EVENT_SUCCESS, eventCode, data });
+    yield put({ type: FETCH_EVENT_SUCCESS, code, data });
   } catch(err) {
     yield put({ type: FETCH_EVENT_FAIL });
   }
 }
 
-function* addQuestion({ eventCode, question }) {
-  yield put({ type: ADD_QUESTION_START, eventCode });
+function* addQuestion({ code, question }) {
+  yield put({ type: ADD_QUESTION_START, code });
   try {
-    yield put({ type: ADD_QUESTION_SUCCESS, eventCode, question });
+    yield put({ type: ADD_QUESTION_SUCCESS, code, question });
   } catch(err) {
     yield put({ type: ADD_QUESTION_FAIL });
   }
@@ -77,7 +77,7 @@ const getReactList = ({ isLike, likes, dislikes, roomToken }) => {
 
 function* reactToQuestion({ payload }) {
   const {
-    eventCode,
+    code,
     index,
     id,
     isLike,
@@ -88,12 +88,12 @@ function* reactToQuestion({ payload }) {
   
   const { oldData, newData } = getReactList({ isLike, likes, dislikes, roomToken });
   // Pass the new react list to start-reducer to pre-set the change => for UX purpose
-  yield put({ type: REACT_TO_QUESTION_START, eventCode, index, newData });
+  yield put({ type: REACT_TO_QUESTION_START, code, index, newData });
   try {
-    yield put({ type: REACT_TO_QUESTION_SUCCESS, index, id, eventCode, isLike });
+    yield put({ type: REACT_TO_QUESTION_SUCCESS, index, id, code, isLike });
   } catch(err) {
     // pass the old react list to fail reducer to restore the data before submitting
-    yield put({ type: REACT_TO_QUESTION_FAIL, eventCode, index, oldData });
+    yield put({ type: REACT_TO_QUESTION_FAIL, code, index, oldData });
   }
 }
 

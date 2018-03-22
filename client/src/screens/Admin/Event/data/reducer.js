@@ -1,7 +1,7 @@
 /* -------------- SAMPLE DATA 
 {
   eventId: id_of_the_event,
-  eventCode: the_event_code,
+  code: the_event_code,
   name: name_of_event,
   from: the_start_date,
   to: the_end_date,
@@ -39,12 +39,16 @@ import {
   ADMIN_FETCH_EVENT_FAIL,
 } from './actionTypes';
 
+// To clean the admin data after new user login
+import {
+  ME_LOGIN_SUCCESS
+} from 'app/data/me/actionTypes';
+
 import { addIndexPropertyTo } from 'app/services/transform';
-import sampleQuestions from './sampleQuestions';
 
 const initialState = {
-  eventId: '',
-  eventCode: '',
+  id: '',
+  code: '',
   name: '',
   from: '',
   to: '',
@@ -63,11 +67,14 @@ export default (state = initialState, action) => {
       }
     }
     case ADMIN_FETCH_EVENT_SUCCESS: {
-      action.data.questions = addIndexPropertyTo(action.data.questions);
+      const eventData = {
+        ...action.data,
+        questions: addIndexPropertyTo([])
+      }
       return {
         ...state,
-        ...action.data,
         inProgress: false,
+        ...eventData,
       }
     }
     case ADMIN_FETCH_EVENT_FAIL: {
@@ -84,20 +91,15 @@ export default (state = initialState, action) => {
       }
     }
     case CREATE_EVENT_SUCCESS: {
-      const { id, eventCode, name, from, to } = action;
       return { 
         ...state,
         inProgress: false,
-        eventCode,
-        eventId: id,
-        name,
-        from,
-        to,
+        ...action.data,
 
-        // Reset the metat data
+        // Reset the metat 
         totalHighlight: 0,
         errors: null,
-        questions: sampleQuestions,
+        questions: [],
       }
     }
     case CREATE_EVENT_FAIL: {
@@ -164,6 +166,10 @@ export default (state = initialState, action) => {
         ...state,
         errors: null,
       }
+    }
+    
+    case ME_LOGIN_SUCCESS: {
+      return initialState
     }
     default: return state;
   }

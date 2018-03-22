@@ -54,7 +54,7 @@ class EventRoom extends Component{
       index,
       id,
       isLike,
-      eventCode: code,
+      code,
       likes,
       dislikes,
       roomToken,

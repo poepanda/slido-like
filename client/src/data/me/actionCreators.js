@@ -23,9 +23,9 @@ export const logout = () => ({
   type: ME_LOGOUT,
 })
 
-export const getRoomToken = (eventCode) => ({
+export const getRoomToken = (code) => ({
   type: ME_GET_ROOM_TOKEN,
-  eventCode
+  code
 })
 
 export const cleanError = () => ({

@@ -1,12 +1,14 @@
 const r = require('rethinkdb');
 
 import userModel from './models/user';
+import eventModel from './models/event';
 import { checkAndCreateTables } from './migration';
 
 let connection = null;
 
 // Exporting models
 export const User = () => userModel(r, connection);
+export const Event = () => eventModel(r, connection);
 
 // Initialize the database
 export default callback => {
@@ -24,6 +26,6 @@ export default callback => {
     checkAndCreateTables(r, connection);    
     
     // Run the call after connectting to database
-    callback();
+    if (typeof callback === 'function') callback();
   });
 }

@@ -15,11 +15,11 @@ const mapStateToProps = (state, { match: { params: { code }}}) => {
 };
 
 const mapDispatchToProps = dispatch => ({
-  fetchEvent: eventCode => dispatch(fetchEvent(eventCode)),
-  getRoomToken: eventCode => dispatch(getRoomToken(eventCode)),
-  addQuestion: (eventCode, question) => dispatch(addQuestion(eventCode, question)),
+  fetchEvent: code => dispatch(fetchEvent(code)),
+  getRoomToken: code => dispatch(getRoomToken(code)),
+  addQuestion: (code, question) => dispatch(addQuestion(code, question)),
   reactToQuestion: ({ 
-    eventCode,
+    code,
     index,
     id,
     isLike,
@@ -27,7 +27,7 @@ const mapDispatchToProps = dispatch => ({
     dislikes,
     roomToken
   }) => dispatch(reactToQuestion({
-    eventCode,
+    code,
     index,
     id,
     isLike,

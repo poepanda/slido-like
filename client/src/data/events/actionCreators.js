@@ -4,14 +4,14 @@ import {
   REACT_TO_QUESTION,
 } from './actionTypes';
 
-export const fetchEvent = (eventCode) => ({
+export const fetchEvent = (code) => ({
   type: FETCH_EVENT,
-  eventCode,
+  code,
 });
 
-export const addQuestion = (eventCode, question) => ({
+export const addQuestion = (code, question) => ({
   type: ADD_QUESTION,
-  eventCode,
+  code,
   question,
 });
 

@@ -1,4 +1,3 @@
-import { delay } from 'redux-saga'
 import { put, call, takeLatest, all } from 'redux-saga/effects';
 
 import {
@@ -62,10 +61,10 @@ function* logout() {
   }
 }
 
-function* getRoomToken({ eventCode }) {
+function* getRoomToken({ code }) {
   yield put({ type: ME_GET_ROOM_TOKEN_START });
   try {
-    yield put({ type: ME_GET_ROOM_TOKEN_SUCCESS, eventCode, token: 'thisisyourtokenblahblah' });
+    yield put({ type: ME_GET_ROOM_TOKEN_SUCCESS, code, token: 'thisisyourtokenblahblah' });
   } catch(err) {
     yield put({ type: ME_GET_ROOM_TOKEN_FAIL });
   }

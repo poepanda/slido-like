@@ -10,7 +10,7 @@ import Router from './routes';
 import 'bulma/css/bulma.css';
 import './App.css';
 
-const store = configureStore();
+export const store = configureStore();
 
 class App extends Component {
   render() {

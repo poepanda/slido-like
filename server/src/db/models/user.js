@@ -1,4 +1,4 @@
-import { errorHandler } from '../utils';
+import { errorHandler, addMeta } from '../utils';
 
 const defaultUserData = {
   email: '',
@@ -15,7 +15,8 @@ export default (r, connection) => ({
 
   create: (data = defaultUserData) => {
     return r.table('users')
-      .insert(data).run(connection)
+      .insert(addMeta(data))
+      .run(connection)
       .then(({ generated_keys, errors}) => ({
         errors,
         id: generated_keys[0]
